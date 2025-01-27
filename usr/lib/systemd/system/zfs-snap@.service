@@ -1,0 +1,7 @@
+[Unit]
+Description=zfs-snap %i
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/usr/bin/zfs-snap.sh %i

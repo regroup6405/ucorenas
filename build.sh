@@ -2,23 +2,39 @@
 
 set -ouex pipefail
 
-### Install packages
+dnf remove -y nfs-utils-coreos
+dnf install -y htop nfs-utils \
+qbittorrent-nox unzip unrar targetcli iscsi-initiator-utils \
+sanoid samba samba-usershares hdparm pciutils rclone snapraid usbutils xdg-dbus-proxy xdg-user-dirs \
+perl-Config-IniFiles perl-Data-Dumper perl-Capture-Tiny perl-Getopt-Long lzop mbuffer mhash pv
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
+TMP="$(mktemp)"
+cat <<EOF > "$TMP"
+docker.service
+nginx.service
 
-# this installs a package from fedora repos
-dnf install -y tmux 
+portaineragent.service
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+autoreboot.timer
+docker-cleanup.timer
 
-#### Example for enabling a System Unit File
+zfs-snap@mirpool.timer
+zpool-pushover@mirpool.timer
+zpool-scrub@mirpool.timer
+EOF
 
-systemctl enable podman.socket
+cat "$TMP" | grep -v "^#" | grep '\.service$\|\.timer' | while IFS= read -r i; do
+  systemctl enable "$i"
+done
+
+git clone https://github.com/zfsnap/zfsnap.git /usr/src/zfsnap
+cp /usr/src/zfsnap/sbin/zfsnap.sh /usr/sbin/zfsnap
+cp /usr/src/zfsnap/man/man8/zfsnap.8 /usr/share/man/man8/zfsnap.8
+chmod +x /usr/sbin/zfsnap
+rm -rf /usr/src/zfsnap
+
+find /usr/bin -type f | grep '\.sh$' | sort | while IFS= read -r i; do
+  chmod +x "$i"
+done
+
+[ -f "$TMP" ] && rm -f "$TMP"

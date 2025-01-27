@@ -1,0 +1,25 @@
+services:
+  nginx:
+    image: lscr.io/linuxserver/nginx:latest
+    container_name: nginx
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /var/opt/persist/nginx/config:/config
+      - /var/opt/persist/static:/var/opt/persist/static
+      - /etc/ssl/user:/etc/ssl/user
+    ports:
+      - 443:443
+    restart: unless-stopped
+    networks:
+      default:
+        ipv4_address: 172.20.0.2
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.0.0/20"

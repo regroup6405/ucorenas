@@ -1,0 +1,8 @@
+[Unit]
+Description=ostree-docker-cleanup
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+ExecStart= /bin/sh -c 'docker images -aq | while IFS= read -r i; do docker rmi -f "$i"; done; docker system prune -f'

@@ -1,0 +1,19 @@
+[Unit]
+Description=ostree-portaineragent
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=15
+TimeoutStartSec=0
+ExecStartPre=/usr/bin/docker pull portainer/agent:latest
+ExecStart=/usr/bin/docker run --rm --name %n --stop-timeout 60 \
+  -p 9001:9001 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /var/lib/docker/volumes:/var/lib/docker/volumes \
+  portainer/agent:latest
+ExecStop=/usr/bin/docker stop -t 2 %n
+
+[Install]
+WantedBy=default.target

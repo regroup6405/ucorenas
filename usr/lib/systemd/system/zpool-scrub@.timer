@@ -1,0 +1,9 @@
+[Unit]
+Description=zpool scrub timer
+
+[Timer]
+OnCalendar=Mon *-*-01..07 02:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

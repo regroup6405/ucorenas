@@ -1,0 +1,21 @@
+[Unit]
+Description=%n dockerized service
+After=docker.service nginx.service
+Requires=docker.service nginx.service
+
+[Service]
+Restart=always
+ExecStartPre=/usr/bin/docker pull lscr.io/linuxserver/firefox:latest
+ExecStart=/usr/bin/docker run --rm --name %n --stop-timeout 60 \
+  --security-opt seccomp=unconfined \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=America/New_York \
+  --net nginx_default --ip 172.20.1.140 \
+  -v /var/opt/persist/firefox:/config \
+  --shm-size="1gb" \
+  lscr.io/linuxserver/firefox:latest
+ExecStop=/usr/bin/docker stop -t 2 %n
+
+[Install]
+WantedBy=default.target

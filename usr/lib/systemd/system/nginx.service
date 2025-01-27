@@ -1,0 +1,17 @@
+[Unit]
+Description=ostree-nginx
+After=docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+RestartSec=15
+TimeoutStartSec=0
+User=root
+Group=root
+ExecStartPre=/bin/sh -c '[ ! -d "/var/opt/persist/nginx" ] && mkdir -p "/var/opt/persist/nginx"; cp -r /etc/default/nginx /var/opt/persist; chown 1000:1000 -R /var/opt/persist/nginx; sed -i "s|WEBSITE|$(cat /etc/WEBSITE)|g" /var/opt/persist/nginx/config/nginx/ssl.conf; exit 0'
+ExecStart=/usr/bin/docker compose --project-directory /var/opt/persist/nginx -f /var/opt/persist/nginx/docker-compose.yml up --remove-orphans --quiet-pull
+ExecStop=/usr/bin/docker compose --project-directory /var/opt/persist/nginx down
+
+[Install]
+WantedBy=multi-user.target
