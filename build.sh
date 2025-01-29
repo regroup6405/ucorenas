@@ -2,6 +2,14 @@
 
 set -ouex pipefail
 
+RELEASE="$(rpm -E %fedora)"
+[ ! -d /tmp/rpms ] && mkdir -p /tmp/rpms
+curl -s -Lo /tmp/rpms/rpmfusion-free-release-${RELEASE}.noarch.rpm https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${RELEASE}.noarch.rpm
+curl -s -Lo /tmp/rpms/rpmfusion-nonfree-release-${RELEASE}.noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${RELEASE}.noarch.rpm
+dnf install -y \
+    /tmp/rpms/*.rpm \
+    fedora-repos-archive
+    
 dnf remove -y nfs-utils-coreos
 dnf install -y htop nfs-utils \
 qbittorrent-nox unzip unrar targetcli iscsi-initiator-utils \
