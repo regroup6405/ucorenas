@@ -3,8 +3,8 @@ Description=ostree-autoreboot timer
 ConditionPathExists=/run/ostree-booted
 
 [Timer]
-OnCalendar=*-*-* 4:15:00
-RandomizedDelaySec=2h
+OnCalendar=*-*-* 4:30:00
+RandomizedDelaySec=20m
 
 [Install]
 WantedBy=timers.target
