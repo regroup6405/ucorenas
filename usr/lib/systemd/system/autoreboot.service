@@ -6,4 +6,4 @@ ConditionPathExists=/run/ostree-booted
 Type=oneshot
 User=root
 Group=root
-ExecStart=/bin/sh -c '[ ! -z "$(whereis zpool | awk '{print $2}' )" ] && zpool status | grep -q 'scrub in progress' && exit 0; rpm-ostree status --pending-exit-77 > /dev/null; if [ $? -eq 77 ]; then systemctl reboot; fi'
+ExecStart=/bin/sh -c 'rpm-ostree status --pending-exit-77 > /dev/null; if [ $? -eq 77 ]; then systemctl reboot; fi'
