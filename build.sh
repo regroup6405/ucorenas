@@ -38,6 +38,7 @@ done
 git clone https://github.com/zfsnap/zfsnap.git /usr/src/zfsnap
 cp /usr/src/zfsnap/sbin/zfsnap.sh /usr/sbin/zfsnap
 cp /usr/src/zfsnap/man/man8/zfsnap.8 /usr/share/man/man8/zfsnap.8
+cp -r /usr/src/zfsnap/share /usr
 chmod +x /usr/sbin/zfsnap
 rm -rf /usr/src/zfsnap
 
