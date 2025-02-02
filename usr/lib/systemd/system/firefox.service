@@ -5,6 +5,8 @@ Requires=docker.service nginx.service
 
 [Service]
 Restart=always
+RestartSec=15
+TimeoutStartSec=0
 ExecStartPre=/usr/bin/docker pull lscr.io/linuxserver/firefox:latest
 ExecStart=/usr/bin/docker run --rm --name %n --stop-timeout 60 \
   --security-opt seccomp=unconfined \
