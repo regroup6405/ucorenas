@@ -42,7 +42,7 @@ cp -r /usr/src/zfsnap/share /usr
 chmod +x /usr/sbin/zfsnap
 rm -rf /usr/src/zfsnap
 
-curl -SL -o ffmpeg-master-latest-linux64-gpl.tar.xz "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz" \
+curl -sSL -o ffmpeg-master-latest-linux64-gpl.tar.xz "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz" \
 && xz -d ffmpeg-master-latest-linux64-gpl.tar.xz \
 && tar xvf ffmpeg-master-latest-linux64-gpl.tar 2>&1 | grep 'bin/ff' | while IFS= read -r i; do
   FILENAME="$(echo "$i" | rev | cut -d'/' -f1 | rev)"
