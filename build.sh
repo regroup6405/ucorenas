@@ -12,7 +12,7 @@ dnf install -y \
     
 dnf remove -y nfs-utils-coreos
 dnf install -y htop nfs-utils \
-qbittorrent-nox mktorrent unzip unrar targetcli iscsi-initiator-utils \
+qbittorrent-nox mktorrent mediainfo unzip unrar targetcli iscsi-initiator-utils \
 sanoid samba samba-usershares hdparm pciutils rclone snapraid usbutils xdg-dbus-proxy xdg-user-dirs \
 perl-Config-IniFiles perl-Data-Dumper perl-Capture-Tiny perl-Getopt-Long lzop mbuffer mhash pv bc
 
