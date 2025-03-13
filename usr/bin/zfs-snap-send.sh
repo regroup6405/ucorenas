@@ -23,7 +23,7 @@ echo "${SOURCELIST}" \
 | sort \
 | uniq \
 | while IFS= read -r i; do
-    [ ! "$(zfs get refreservation persist/buildbot | grep '/' | awk '{print $3}' | grep -q 'none' && echo 1)" == "1" ] && sudo zfs set refreservation=none "$i"
+    [ ! "$(zfs get refreservation "$i" | grep '/' | awk '{print $3}' | grep -q 'none' && echo 1)" == "1" ] && sudo zfs set refreservation=none "$i"
     SOURCELATEST="$(echo "$SOURCELIST" | grep "$i" | tail -n 1 | awk '{print $1}')"
     DATASETEXISTSONTARGET="$(echo "$TARGETDATASETS" | grep -q "$i" && echo 1)"
     if [ ! "$DATASETEXISTSONTARGET" == "1" ]; then
