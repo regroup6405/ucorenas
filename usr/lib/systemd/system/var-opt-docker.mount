@@ -1,0 +1,7 @@
+[Mount]
+What=/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1-part1
+Where=/var/opt/docker
+Type=ext4
+
+[Install]
+WantedBy=local-fs.target
