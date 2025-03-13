@@ -15,6 +15,7 @@ ExecStart=/usr/bin/docker run --rm --name %n --stop-timeout 60 \
   -e TZ=America/New_York \
   --net nginx_default --ip 172.20.1.140 \
   -v /var/opt/persist/firefox:/config \
+  -v /tmp:/tmp \
   -v /etc/hosts:/etc/hosts:ro \
   --shm-size="1gb" \
   lscr.io/linuxserver/firefox:latest
