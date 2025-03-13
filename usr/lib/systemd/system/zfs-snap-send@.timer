@@ -1,0 +1,10 @@
+[Unit]
+Description=zfs-snap-send timer
+
+[Timer]
+RandomizedDelaySec=5m
+OnBootSec=15min
+OnUnitActiveSec=4h
+
+[Install]
+WantedBy=timers.target
