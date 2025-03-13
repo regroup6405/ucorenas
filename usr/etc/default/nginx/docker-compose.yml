@@ -8,7 +8,6 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /var/opt/persist/nginx/config:/config
-      - /var/opt/persist/static:/var/opt/persist/static
       - /etc/ssl/user:/etc/ssl/user
     ports:
       - 443:443
