@@ -34,14 +34,14 @@ echo "${SOURCELIST}" \
     if [ "$EXISTSONTARGET" == "1" ]; then
       # echo "$i exists on target, incrementally sending..."
       TARGETLATEST="$(echo "$TARGETLIST" | grep "$i" | tail -n 1 | awk '{print $1}')"
-      [ "$SOURCELATEST" == "$TARGETLATEST" ] && echo "$TARGETLATEST == $SOURCELATEST, continuing..." && continue
+      # [ "$SOURCELATEST" == "$TARGETLATEST" ] && echo "$TARGETLATEST == $SOURCELATEST, continuing..." && continue
       # echo "$TARGETLATEST > $SOURCELATEST"
-      echo sudo zfs send -i "$TARGETLATEST" "$SOURCELATEST" \| ssh -i ${KEYLOC} ${TARGETSSH} sudo zfs recv $i | bash
+      [ ! "$SOURCELATEST" == "$TARGETLATEST" ] && echo sudo zfs send -i "$TARGETLATEST" "$SOURCELATEST" \| ssh -i ${KEYLOC} ${TARGETSSH} sudo zfs recv $i | bash
     else
       # echo "$i doesn't exist on target, sending from scratch..."
       SOURCEFIRST="$(echo "$SOURCELIST" | grep "$i" | head -n 1 | awk '{print $1}')"
       echo sudo zfs send "$SOURCEFIRST" \| ssh -i ${KEYLOC} ${TARGETSSH} sudo zfs recv -F $i | bash
-      echo sudo zfs send -i "$SOURCEFIRST" "$SOURCELATEST" \| ssh -i ${KEYLOC} ${TARGETSSH} sudo zfs recv -F $i | bash
+      [ ! "$SOURCEFIRST" == "$SOURCELATEST" ] && echo sudo zfs send -i "$SOURCEFIRST" "$SOURCELATEST" \| ssh -i ${KEYLOC} ${TARGETSSH} sudo zfs recv -F $i | bash
     fi
     ssh -i ${KEYLOC} -n ${TARGETSSH} "sudo zfs set readonly=on $i"
   done
