@@ -14,7 +14,7 @@ dnf remove -y nfs-utils-coreos
 dnf install -y htop nfs-utils \
 qbittorrent-nox mktorrent mediainfo transmission-cli transmission-daemon unzip unrar \
 targetcli iscsi-initiator-utils \
-sanoid samba samba-usershares avahi \
+sanoid samba samba-usershares avahi avahi-tools nss-mdns \
 hdparm pciutils rclone snapraid usbutils xdg-dbus-proxy xdg-user-dirs \
 perl-Config-IniFiles perl-Data-Dumper perl-Capture-Tiny perl-Getopt-Long lzop mbuffer mhash pv bc
 
