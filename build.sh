@@ -33,6 +33,8 @@ zpool-pushover@mirpool.timer
 zpool-scrub@mirpool.timer
 EOF
 
+systemctl disable fwupd-refresh.timer
+
 cat "$TMP" | grep -v "^#" | grep '\.service$\|\.timer' | while IFS= read -r i; do
   systemctl enable "$i"
 done
