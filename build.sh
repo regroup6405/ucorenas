@@ -22,12 +22,8 @@ TMP="$(mktemp)"
 cat <<EOF > "$TMP"
 docker.service
 nginx.service
-
-portaineragent.service
-
 autoreboot.timer
 docker-cleanup.timer
-
 zfs-snap@mirpool.timer
 zpool-pushover@mirpool.timer
 zpool-scrub@mirpool.timer
