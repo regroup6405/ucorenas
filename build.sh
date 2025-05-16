@@ -18,6 +18,11 @@ sanoid samba samba-usershares avahi avahi-tools nss-mdns dbus-daemon \
 hdparm pciutils rclone snapraid usbutils xdg-dbus-proxy xdg-user-dirs \
 perl-Config-IniFiles perl-Data-Dumper perl-Capture-Tiny perl-Getopt-Long lzop mbuffer mhash pv bc
 
+FULLRELEASE=$(curl -fsSL https://api.github.com/repos/userdocs/qbittorrent-nox-static/releases/latest | grep "tag_name" | awk '{print substr($2, 2, length($2)-3) }')
+rm -f /usr/bin/qbittorrent-nox
+curl -fsSL "https://github.com/userdocs/qbittorrent-nox-static/releases/download/${FULLRELEASE}/x86_64-qbittorrent-nox" -o /usr/bin/qbittorrent-nox
+chmod +x /usr/bin/qbittorrent-nox
+
 TMP="$(mktemp)"
 cat <<EOF > "$TMP"
 docker.service
